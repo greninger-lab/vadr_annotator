@@ -21,6 +21,8 @@ process VADR {
     shell:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+    mv ${meta.id}.fasta ${meta.id}_untrimmed.fasta
+    /opt/vadr/vadr/miniscripts/fasta-trim-terminal-ambigs.pl --minlen 50 --maxlen 165000 ${meta.id}_untrimmed.fasta > ${meta.id}.fasta
     v-annotate.pl --mdir ${mdir} --mkey ${mkey} ${task.ext.args} ${meta.id}.fasta ${meta.id}_out
     cat ${meta.id}_out/${meta.id}_out.vadr.pass.tbl ${meta.id}_out/${meta.id}_out.vadr.fail.tbl > ./temp.${meta.id}_out.vadr.tbl
     sed -n '/Additional note/q;p' ./temp.${meta.id}_out.vadr.tbl > ./${meta.id}_out.vadr.tbl
