@@ -70,7 +70,7 @@ workflow ANNOTATE {
         INPUT_CHECK.out.fasta,
         file(params.mdir),
         params.mkey,
-        file(params.sbt)        
+        file(params.sbt)       
     )
 }
 
